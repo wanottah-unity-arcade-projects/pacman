@@ -1,15 +1,21 @@
+
 using System.Collections;
 using UnityEngine;
+
 
 public class GhostHome : GhostBehavior
 {
     public Transform inside;
+
     public Transform outside;
+
+
 
     private void OnEnable()
     {
         StopAllCoroutines();
     }
+
 
     private void OnDisable()
     {
@@ -18,6 +24,7 @@ public class GhostHome : GhostBehavior
             StartCoroutine(ExitTransition());
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -28,23 +35,29 @@ public class GhostHome : GhostBehavior
         }
     }
 
+
     private IEnumerator ExitTransition()
     {
         // Turn off movement while we manually animate the position
         ghost.movement.SetDirection(Vector2.up, true);
+
         ghost.movement.rigidbody.isKinematic = true;
+
         ghost.movement.enabled = false;
 
         Vector3 position = transform.position;
 
         float duration = 0.5f;
+
         float elapsed = 0f;
 
         // Animate to the starting point
         while (elapsed < duration)
         {
             ghost.SetPosition(Vector3.Lerp(position, inside.position, elapsed / duration));
+
             elapsed += Time.deltaTime;
+
             yield return null;
         }
 
@@ -54,14 +67,19 @@ public class GhostHome : GhostBehavior
         while (elapsed < duration)
         {
             ghost.SetPosition(Vector3.Lerp(inside.position, outside.position, elapsed / duration));
+
             elapsed += Time.deltaTime;
+
             yield return null;
         }
 
         // Pick a random direction left or right and re-enable movement
         ghost.movement.SetDirection(new Vector2(Random.value < 0.5f ? -1f : 1f, 0f), true);
+
         ghost.movement.rigidbody.isKinematic = false;
+
         ghost.movement.enabled = true;
     }
 
-}
+
+} // end of class

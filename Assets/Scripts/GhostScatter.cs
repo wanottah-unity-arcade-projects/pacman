@@ -1,4 +1,6 @@
+
 using UnityEngine;
+
 
 public class GhostScatter : GhostBehavior
 {
@@ -6,6 +8,7 @@ public class GhostScatter : GhostBehavior
     {
         ghost.chase.Enable();
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,7 +27,8 @@ public class GhostScatter : GhostBehavior
                 index++;
 
                 // Wrap the index back around if overflowed
-                if (index >= node.availableDirections.Count) {
+                if (index >= node.availableDirections.Count) 
+                {
                     index = 0;
                 }
             }
@@ -33,4 +37,4 @@ public class GhostScatter : GhostBehavior
         }
     }
 
-}
+} // end of class
